@@ -104,7 +104,9 @@ export default class App extends React.Component {
         borderRadius: '10px',
         borderColor: 'gray',
         fontFamily: 'Helvetica Neue',
-        fontWeight: '700'
+        fontSize: '25px',
+        fontWeight: '700',
+        color: 'gray'
       },
       toolbar: {
         background: '#1E2224',
