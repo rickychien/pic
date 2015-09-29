@@ -47,12 +47,13 @@ export default class App extends React.Component {
   }
 
   onSave() {
-    return fetch(this.state.file.preview)
+    let file = this.state.file;
+    return fetch(file.preview)
     .then(response => {
       return response.blob();
     })
     .then(blob => {
-      FileSaver.saveAs(blob, 'pic.png');
+      FileSaver.saveAs(blob, file.name);
     });
   }
 
