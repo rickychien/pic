@@ -7,10 +7,6 @@ export default class ToolButton extends React.Component {
     super(props);
   }
 
-  onClick() {
-
-  }
-
   render() {
     let size = this.props.size || 25;
     let color = this.props.color || '#E0E0E0';
@@ -30,7 +26,7 @@ export default class ToolButton extends React.Component {
     };
 
     return (
-      <button type='button' style={style.button} onClick={this.onClick}>
+      <button type='button' style={style.button} onClick={this.props.onClick}>
         <i className={fontAwesome}></i>
       </button>
     );

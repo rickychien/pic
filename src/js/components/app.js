@@ -2,8 +2,11 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 
+/* other */
+import FileSaver from 'filesaver.js';
+
 /* components */
-import Toolbar from './toolbar';
+import ToolButton from './toolbutton';
 
 export default class App extends React.Component {
 
@@ -11,10 +14,21 @@ export default class App extends React.Component {
     super(props);
 
     this.onDrop = this.onDrop.bind(this);
+    this.onSave = this.onSave.bind(this);
 
     this.state = {
       file: {}
     };
+  }
+
+  onSave() {
+    return fetch(this.state.file.preview)
+    .then(response => {
+      return response.blob();
+    })
+    .then(blob => {
+      FileSaver.saveAs(blob, 'pic.png');
+    });
   }
 
   onDrop(files) {
@@ -53,6 +67,15 @@ export default class App extends React.Component {
         borderColor: 'gray',
         fontFamily: 'Helvetica Neue',
         fontWeight: '700'
+      },
+      toolbar: {
+        background: '#1E2224',
+        width: '55px',
+        height: '100%'
+      },
+      hr: {
+        margin: '0 10%',
+        borderColor: '#32323E'
       }
     };
     let content = this.state.file.preview ? (
@@ -67,7 +90,16 @@ export default class App extends React.Component {
 
     return (
       <div style={style.app}>
-        <Toolbar />
+        <div style={style.toolbar}>
+          <ToolButton fontAwesome='picture-o' />
+          <hr style={style.hr} />
+          <ToolButton fontAwesome='circle-o' />
+          <ToolButton fontAwesome='square-o' />
+          <ToolButton fontAwesome='crop' />
+          <ToolButton fontAwesome='rotate-left' />
+          <ToolButton fontAwesome='rotate-right' />
+          <ToolButton fontAwesome='save' onClick={this.onSave} />
+        </div>
         <div style={style.container}>
           {content}
         </div>
