@@ -68,13 +68,8 @@ export default class App extends React.Component {
   }
 
   onSave() {
-    let file = this.state.file;
-    return fetch(file.preview)
-    .then(response => {
-      return response.blob();
-    })
-    .then(blob => {
-      FileSaver.saveAs(blob, file.name);
+    React.findDOMNode(this.refs.canvas).toBlob(blob => {
+      FileSaver.saveAs(blob, this.state.file.name);
     });
   }
 
