@@ -7,6 +7,7 @@ import FileSaver from 'filesaver.js';
 
 /* components */
 import ToolButton from './toolbutton';
+import Canvas from './canvas';
 
 export default class App extends React.Component {
 
@@ -20,13 +21,11 @@ export default class App extends React.Component {
     this.onRotateRight = this.onRotateRight.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDrop = this.onDrop.bind(this);
-    this._drawRotateImage = this._drawRotateImage.bind(this);
 
     this.state = {
       file: {}
     };
 
-    this.image = new Image();
     this.imageAngle = 0;
   }
 
@@ -44,27 +43,12 @@ export default class App extends React.Component {
 
   onRotateLeft() {
     this.imageAngle -= 90;
-    this._drawRotateImage(this.imageAngle);
+    this.refs.canvas.drawRotateImage(this.imageAngle);
   }
 
   onRotateRight() {
     this.imageAngle += 90;
-    this._drawRotateImage(this.imageAngle);
-  }
-
-  _drawRotateImage(angle) {
-    let context = React.findDOMNode(this.refs.canvas).getContext('2d');
-    let canvas = context.canvas;
-    let image = this.image;
-    let width = canvas.width;
-    let height = canvas.height;
-
-    context.clearRect(0, 0 ,width, height);
-    context.save();
-    context.translate(width / 2, height / 2);
-    context.rotate(angle * Math.PI / 180);
-    context.drawImage(image, -(image.width / 2), -(image.height / 2));
-    context.restore();
+    this.refs.canvas.drawRotateImage(this.imageAngle);
   }
 
   onSave() {
@@ -74,22 +58,9 @@ export default class App extends React.Component {
   }
 
   onDrop(files) {
-    let file = files[0];
-
     this.setState({
-      file: file
+      file: files[0]
     });
-
-    let image = this.image;
-    image.addEventListener('load', () => {
-      let context = React.findDOMNode(this.refs.canvas).getContext('2d');
-      let width = context.canvas.width  = window.innerWidth - 55;
-      let height = context.canvas.height = window.innerHeight;
-      let drawX = width / 2 - image.width / 2;
-      let drawY = height / 2 - image.height / 2;
-      context.drawImage(image, drawX, drawY);
-    }, false);
-    image.src = file.preview;
   }
 
   render() {
@@ -136,7 +107,7 @@ export default class App extends React.Component {
       }
     };
     let content = this.state.file.preview ? (
-      <canvas ref='canvas'></canvas>
+      <Canvas ref='canvas' imageUrl={this.state.file.preview} />
     ) : (
       <Dropzone onDrop={this.onDrop} style={style.upload}>
         <div>Drag & drop picture</div>
