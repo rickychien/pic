@@ -58,9 +58,21 @@ export default class App extends React.Component {
   }
 
   onDrop(files) {
+    let file = files[0];
+
     this.setState({
-      file: files[0]
+      file: file
     });
+
+    let img = new Image();
+    img.addEventListener('load', () => {
+      let ctx = React.findDOMNode(this.refs.canvas).getContext('2d');
+      let width = ctx.canvas.width  = window.innerWidth * 0.8;
+      let height = ctx.canvas.height = window.innerHeight * 0.8;
+      ctx.drawImage(img,
+        width / 2 - img.width / 2, height / 2 - img.height / 2);
+    }, false);
+    img.src = file.preview;
   }
 
   render() {
@@ -105,9 +117,7 @@ export default class App extends React.Component {
       }
     };
     let content = this.state.file.preview ? (
-      <div>
-        <img src={this.state.file.preview} />
-      </div>
+      <canvas ref='canvas'></canvas>
     ) : (
       <Dropzone onDrop={this.onDrop} style={style.upload}>
         <div>Drag & drop picture</div>
