@@ -1,0 +1,41 @@
+{
+  "name": "pic",
+  "version": "0.1.0",
+  "description": "pic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rickychien/pic.git"
+  },
+  "readme": "README.md",
+  "engines": {
+    "node": ">=4.0",
+    "npm": ">=2"
+  },
+  "dependencies": {
+    "font-awesome": "^4.4.0",
+    "react": "^0.13.3",
+    "react-dropzone": "^2.1.0",
+    "react-router": "^0.13.3"
+  },
+  "devDependencies": {
+    "babel-core": "^5.6.15",
+    "babel-loader": "^5.2.2",
+    "css-loader": "^0.15.1",
+    "del": "^1.2.0",
+    "exports-loader": "^0.6.2",
+    "file-loader": "^0.8.4",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-html-replace": "^1.5.4",
+    "gulp-newer": "^0.5.1",
+    "imports-loader": "^0.6.4",
+    "style-loader": "^0.12.3",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.10.1",
+    "webpack-dev-server": "^1.10.1"
+  },
+  "scripts": {
+    "gh-pages": "gulp && git checkout gh-pages && cp -r dist/* . && git add . && git commit -m 'Update gh-pages' && git push origin gh-pages && git checkout master"
+  }
+}
