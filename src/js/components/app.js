@@ -13,12 +13,37 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onDrop = this.onDrop.bind(this);
+    this.onCircle = this.onCircle.bind(this);
+    this.onSquare = this.onSquare.bind(this);
+    this.onCrop = this.onCrop.bind(this);
+    this.onRotateLeft = this.onRotateLeft.bind(this);
+    this.onRotateRight = this.onRotateRight.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.onDrop = this.onDrop.bind(this);
 
     this.state = {
       file: {}
     };
+  }
+
+  onCircle() {
+
+  }
+
+  onSquare() {
+
+  }
+
+  onCrop() {
+
+  }
+
+  onRotateLeft() {
+
+  }
+
+  onRotateRight() {
+
   }
 
   onSave() {
@@ -93,12 +118,24 @@ export default class App extends React.Component {
         <div style={style.toolbar}>
           <ToolButton fontAwesome='picture-o' />
           <hr style={style.hr} />
-          <ToolButton fontAwesome='circle-o' />
-          <ToolButton fontAwesome='square-o' />
-          <ToolButton fontAwesome='crop' />
-          <ToolButton fontAwesome='rotate-left' />
-          <ToolButton fontAwesome='rotate-right' />
-          <ToolButton fontAwesome='save' onClick={this.onSave} />
+          <ToolButton
+            fontAwesome='circle-o'
+            onClick={this.onCircle} />
+          <ToolButton
+            fontAwesome='square-o'
+            onClick={this.onSquare} />
+          <ToolButton
+            fontAwesome='crop'
+            onClick={this.onCrop} />
+          <ToolButton
+            fontAwesome='rotate-left'
+            onClick={this.onRotateLeft} />
+          <ToolButton
+            fontAwesome='rotate-right'
+            onClick={this.onRotateRight} />
+          <ToolButton
+            fontAwesome='save'
+            onClick={this.onSave} />
         </div>
         <div style={style.container}>
           {content}
