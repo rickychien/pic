@@ -66,25 +66,21 @@ export default class App extends React.Component {
   render() {
     let style = {
       app: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         width: '100%',
         height: '100%'
       },
       container: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        WebkitAlignItems: 'center',
-        WebkitJustifyContent: 'center',
         width: '100%',
         height: '100%'
       },
       upload: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        WebkitAlignItems: 'center',
-        WebkitJustifyContent: 'center',
         margin: '0 auto',
         width: '400px',
         height: '400px',
