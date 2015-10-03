@@ -61,11 +61,11 @@ export default class Canvas extends React.Component {
     let lastY = this.lastY;
 
     if (this.isMouseDown) {
-      var dx = Math.abs(lastX - canvasMouseX);
-      var dy = Math.abs(lastY - canvasMouseY);
-      var midX = (lastX + canvasMouseX) / 2;
-      var midY = (lastY + canvasMouseY) / 2;
-      var r = Math.sqrt(dx * dx + dy * dy) / 2;
+      let dx = Math.abs(lastX - canvasMouseX);
+      let dy = Math.abs(lastY - canvasMouseY);
+      let midX = (lastX + canvasMouseX) / 2;
+      let midY = (lastY + canvasMouseY) / 2;
+      let r = Math.sqrt(dx * dx + dy * dy) / 2;
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.beginPath();
       context.arc(midX, midY, r, 0, 2 * Math.PI, true);
