@@ -2,12 +2,15 @@
 import React from 'react';
 
 /* other */
+import 'blueimp-canvas-to-blob';
 import { fabric } from 'fabric';
 
 export default class Canvas extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.toBlob = this.toBlob.bind(this);
   }
 
   componentDidMount() {
@@ -70,6 +73,10 @@ export default class Canvas extends React.Component {
     canvas.add(downOverlay);
     canvas.add(rightOverlay);
     canvas.add(leftOverlay);
+  }
+
+  toBlob(callback) {
+    React.findDOMNode(this.refs.canvas).toBlob(callback);
   }
 
   render() {

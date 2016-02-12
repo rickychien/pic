@@ -46,7 +46,7 @@ export default class App extends React.Component {
   }
 
   onSave() {
-    React.findDOMNode(this.refs.canvas).toBlob(blob => {
+    this.refs.canvas.toBlob(blob => {
       FileSaver.saveAs(blob, this.state.file.name);
     });
   }
