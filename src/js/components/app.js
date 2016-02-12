@@ -14,52 +14,39 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onCircle = this.onCircle.bind(this);
-    this.onSquare = this.onSquare.bind(this);
-    this.onCrop = this.onCrop.bind(this);
-    this.onRotateLeft = this.onRotateLeft.bind(this);
-    this.onRotateRight = this.onRotateRight.bind(this);
-    this.onSave = this.onSave.bind(this);
+    this.resize = this.resize.bind(this);
     this.onDrop = this.onDrop.bind(this);
+    this.onSave = this.onSave.bind(this);
 
     this.state = {
-      file: {}
+      file: {},
+      containerWidth: 0,
+      containerHeight: 0
     };
-
-    this.imageAngle = 0;
   }
 
-  onCircle() {
-
+  componentDidMount() {
+    this.resize();
+    window.addEventListener('resize', this.resize);
   }
 
-  onSquare() {
-
-  }
-
-  onCrop() {
-
-  }
-
-  onRotateLeft() {
-    this.imageAngle -= 90;
-    this.refs.canvas.drawRotateImage(this.imageAngle);
-  }
-
-  onRotateRight() {
-    this.imageAngle += 90;
-    this.refs.canvas.drawRotateImage(this.imageAngle);
-  }
-
-  onSave() {
-    React.findDOMNode(this.refs.canvas).toBlob(blob => {
-      FileSaver.saveAs(blob, this.state.file.name);
+  resize() {
+    let container = React.findDOMNode(this.refs.container);
+    this.setState({
+      containerWidth: container.offsetWidth,
+      containerHeight: container.offsetHeight
     });
   }
 
   onDrop(files) {
     this.setState({
       file: files[0]
+    });
+  }
+
+  onSave() {
+    React.findDOMNode(this.refs.canvas).toBlob(blob => {
+      FileSaver.saveAs(blob, this.state.file.name);
     });
   }
 
@@ -102,8 +89,13 @@ export default class App extends React.Component {
         borderColor: '#32323E'
       }
     };
+
     let content = this.state.file.preview ? (
-      <Canvas ref='canvas' imageUrl={this.state.file.preview} />
+      <Canvas
+        ref='canvas'
+        imageUrl={this.state.file.preview}
+        containerWidth={this.state.containerWidth}
+        containerHeight={this.state.containerHeight} />
     ) : (
       <Dropzone onDrop={this.onDrop} style={style.upload}>
         <div>Drag & drop picture</div>
@@ -116,25 +108,12 @@ export default class App extends React.Component {
           <ToolButton fontAwesome='picture-o' />
           <hr style={style.hr} />
           <ToolButton
-            fontAwesome='circle-o'
-            onClick={this.onCircle} />
-          <ToolButton
-            fontAwesome='square-o'
-            onClick={this.onSquare} />
-          <ToolButton
-            fontAwesome='crop'
-            onClick={this.onCrop} />
-          <ToolButton
-            fontAwesome='rotate-left'
-            onClick={this.onRotateLeft} />
-          <ToolButton
-            fontAwesome='rotate-right'
-            onClick={this.onRotateRight} />
-          <ToolButton
             fontAwesome='save'
             onClick={this.onSave} />
         </div>
-        <div style={style.container}>
+        <div
+          ref='container'
+          style={style.container}>
           {content}
         </div>
       </div>
