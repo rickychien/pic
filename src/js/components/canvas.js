@@ -20,6 +20,7 @@ export default class Canvas extends React.Component {
     canvas.controlsAboveOverlay = true;
 
     fabric.Image.fromURL(this.props.imageUrl, (image) => {
+      canvas.centerObject(image);
       canvas.add(image);
       canvas.moveTo(image, 0);
     });

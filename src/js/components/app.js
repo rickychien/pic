@@ -26,8 +26,9 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    let container = React.findDOMNode(this.refs.container);
+    container.addEventListener('resize', this.resize);
     this.resize();
-    window.addEventListener('resize', this.resize);
   }
 
   resize() {
