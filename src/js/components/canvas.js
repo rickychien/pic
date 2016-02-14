@@ -14,7 +14,7 @@ export default class Canvas extends React.Component {
   }
 
   componentDidMount() {
-    const size = 512;
+    const size = 256;
     let canvas = this.canvas =
       new fabric.Canvas(React.findDOMNode(this.refs.canvas));
     canvas.setWidth(size);
@@ -29,7 +29,13 @@ export default class Canvas extends React.Component {
       image.lockScalingY = true;
       image.lockUniScaling = true;
       let scaledHeight = image.scaleY * image.height;
-      canvas.setHeight(scaledHeight < size ? scaledHeight : size);
+      if (scaledHeight < size) {
+        canvas.setHeight(scaledHeight);
+        image.lockMovementY = true;
+        image.selectable = false;
+      } else {
+        canvas.setHeight(size);
+      }
       canvas.centerObject(image);
       canvas.add(image);
       canvas.moveTo(image, 0);
