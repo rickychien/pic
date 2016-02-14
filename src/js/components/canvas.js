@@ -14,65 +14,26 @@ export default class Canvas extends React.Component {
   }
 
   componentDidMount() {
-    let width = this.props.containerWidth;
-    let height = this.props.containerHeight;
-
-    let canvas = new fabric.Canvas(React.findDOMNode(this.refs.canvas));
-    canvas.setWidth(width);
-    canvas.setHeight(height);
-    canvas.controlsAboveOverlay = true;
+    const size = 512;
+    let canvas = this.canvas =
+      new fabric.Canvas(React.findDOMNode(this.refs.canvas));
+    canvas.setWidth(size);
+    canvas.setHeight(size);
+    canvas.backgroundColor = 'gray';
 
     fabric.Image.fromURL(this.props.imageUrl, (image) => {
+      image.scaleToWidth(size);
+      image.lockMovementX = true;
+      image.lockRotation = true;
+      image.lockScalingX = true;
+      image.lockScalingY = true;
+      image.lockUniScaling = true;
+      let scaledHeight = image.scaleY * image.height;
+      canvas.setHeight(scaledHeight < size ? scaledHeight : size);
       canvas.centerObject(image);
       canvas.add(image);
       canvas.moveTo(image, 0);
     });
-
-    // Draw dark hollow overlay
-    const color = '#312b2b';
-    const imageSize = 512;
-    const opacity = 0.8
-    let topOverlay = new fabric.Rect({
-      fill: color,
-      width: width,
-      height: height / 2 - imageSize / 2,
-      opacity: opacity,
-      evented: false,
-      selectable: false
-    });
-    let downOverlay = new fabric.Rect({
-      fill: color,
-      top: height / 2 + imageSize / 2,
-      width: width,
-      height: height / 2 - imageSize / 2,
-      opacity: opacity,
-      evented: false,
-      selectable: false
-    });
-    let rightOverlay = new fabric.Rect({
-      fill: color,
-      left: width / 2 + imageSize / 2,
-      top: height / 2 - imageSize / 2,
-      width: width - (width / 2 + imageSize / 2),
-      height: imageSize,
-      opacity: opacity,
-      evented: false,
-      selectable: false
-    });
-    let leftOverlay = new fabric.Rect({
-      fill: color,
-      top: height / 2 - imageSize / 2,
-      width: width / 2 - imageSize / 2,
-      height: imageSize,
-      opacity: opacity,
-      evented: false,
-      selectable: false
-    });
-
-    canvas.add(topOverlay);
-    canvas.add(downOverlay);
-    canvas.add(rightOverlay);
-    canvas.add(leftOverlay);
   }
 
   toBlob(callback) {
@@ -81,7 +42,10 @@ export default class Canvas extends React.Component {
 
   render() {
     return (
-      <canvas ref='canvas' />
+      <canvas
+        ref='canvas'
+        width='512'
+        height='512' />
     );
   }
 

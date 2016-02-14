@@ -14,29 +14,12 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.resize = this.resize.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.onSave = this.onSave.bind(this);
 
     this.state = {
-      file: {},
-      containerWidth: 0,
-      containerHeight: 0
+      file: {}
     };
-  }
-
-  componentDidMount() {
-    let container = React.findDOMNode(this.refs.container);
-    container.addEventListener('resize', this.resize);
-    this.resize();
-  }
-
-  resize() {
-    let container = React.findDOMNode(this.refs.container);
-    this.setState({
-      containerWidth: container.offsetWidth,
-      containerHeight: container.offsetHeight
-    });
   }
 
   onDrop(files) {
@@ -63,7 +46,8 @@ export default class App extends React.Component {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        height: '100%'
+        height: '100%',
+        backgroundColor: '#1E2224'
       },
       upload: {
         display: 'flex',
@@ -94,9 +78,7 @@ export default class App extends React.Component {
     let content = this.state.file.preview ? (
       <Canvas
         ref='canvas'
-        imageUrl={this.state.file.preview}
-        containerWidth={this.state.containerWidth}
-        containerHeight={this.state.containerHeight} />
+        imageUrl={this.state.file.preview} />
     ) : (
       <Dropzone onDrop={this.onDrop} style={style.upload}>
         <div>Drag & drop picture</div>
