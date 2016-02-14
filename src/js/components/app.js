@@ -29,9 +29,11 @@ export default class App extends React.Component {
   }
 
   onSave() {
-    this.refs.canvas.toBlob(blob => {
-      FileSaver.saveAs(blob, this.state.file.name);
-    });
+    if (this.refs.canvas) {
+      this.refs.canvas.toBlob(blob => {
+        FileSaver.saveAs(blob, this.state.file.name);
+      });
+    }
   }
 
   render() {

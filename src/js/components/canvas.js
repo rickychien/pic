@@ -28,6 +28,7 @@ export default class Canvas extends React.Component {
       image.lockScalingX = true;
       image.lockScalingY = true;
       image.lockUniScaling = true;
+
       let scaledHeight = image.scaleY * image.height;
       if (scaledHeight < size) {
         canvas.setHeight(scaledHeight);
@@ -36,6 +37,7 @@ export default class Canvas extends React.Component {
       } else {
         canvas.setHeight(size);
       }
+
       canvas.centerObject(image);
       canvas.add(image);
       canvas.moveTo(image, 0);
